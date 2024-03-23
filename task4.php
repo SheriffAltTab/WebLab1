@@ -1,30 +1,89 @@
-<?php
-
-$matrixE = array(
-    array(1, 2, -3, 4),
-    array(5, -6, 7, -8),
-    array(-9, 10, -11, 12),
-    array(13, -14, 15, -16),
-    array(17, -18, 19, 20),
-);
-
-$newMatrix = array();
-
-for ($i = 0; $i < count($matrixE); $i++) {
-    for ($j = 0; $j < count($matrixE[0]); $j++) {
-        if ($matrixE[$i][$j] >= 0) {
-            $newMatrix[$i][$j] = $matrixE[$i][$j] / 5;
-        } else {
-            $newMatrix[$i][$j] = $matrixE[$i][$j] / 10;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Операції з матрицею</title>
+    <style>
+        table {
+            border-collapse: collapse;
         }
+
+        table, th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<h2>Операції з матрицею</h2>
+<form action="" method="POST">
+    <label for="matrix">Введіть матрицю 4х5 (кожен рядок в новому рядку):</label><br>
+    <textarea id="matrix" name="matrix" rows="5" cols="30"></textarea><br>
+    <button type="submit">Обробити матрицю</button>
+</form>
+
+<?php
+if (isset($_POST['matrix'])) {
+    $input = $_POST['matrix'];
+    $rows = explode("\n", $input);
+
+    if (count($rows) == 5) {
+        $matrix = [];
+        foreach ($rows as $row) {
+            $numbers = explode(',', $row);
+            if (count($numbers) == 4) {
+                $matrix[] = $numbers;
+            } else {
+                echo "<p>Кожен рядок має містити 4 числа.</p>";
+                break;
+            }
+        }
+
+        if (count($matrix) == 5) {
+            function processMatrix($matrix) {
+                foreach ($matrix as &$row) {
+                    foreach ($row as &$element) {
+                        if ($element >= 0) {
+                            $element /= 5;
+                        } else {
+                            $element /= 10;
+                        }
+                    }
+                }
+                return $matrix;
+            }
+
+            // Обробка матриці
+            $processedMatrix = processMatrix($matrix);
+
+            // Виведення результату
+            echo "<p>Оригінальна матриця:</p>";
+            echo "<table>";
+            foreach ($matrix as $row) {
+                echo "<tr>";
+                foreach ($row as $element) {
+                    echo "<td>$element</td>";
+                }
+                echo "</tr>";
+            }
+            echo "</table>";
+
+            echo "<p>Оброблена матриця:</p>";
+            echo "<table>";
+            foreach ($processedMatrix as $row) {
+                echo "<tr>";
+                foreach ($row as $element) {
+                    echo "<td>$element</td>";
+                }
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+    } else {
+        echo "<p>Матриця має містити 5 рядків.</p>";
     }
 }
-
-for ($i = 0; $i < count($newMatrix); $i++) {
-    for ($j = 0; $j < count($newMatrix[0]); $j++) {
-        echo $newMatrix[$i][$j] . " ";
-    }
-    echo "\n";
-}
-
 ?>
+</body>
+</html>
