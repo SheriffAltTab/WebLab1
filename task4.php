@@ -54,10 +54,8 @@ if (isset($_POST['matrix'])) {
                 return $matrix;
             }
 
-            // Обробка матриці
             $processedMatrix = processMatrix($matrix);
 
-            // Виведення результату
             echo "<p>Оригінальна матриця:</p>";
             echo "<table>";
             foreach ($matrix as $row) {

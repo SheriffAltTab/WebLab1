@@ -20,6 +20,7 @@ if (isset($_GET['number'])) {
     function isPalindrome($number) {
         $reversed = strrev($number);
         if ($number == $reversed) {
+            return true;
         } else {
             return false;
         }

@@ -14,18 +14,14 @@
 </form>
 
 <?php
-// Перевірка, чи було відправлено форму
 if (isset($_POST['text'])) {
-    // Отримання введеного тексту від користувача
     $text = $_POST['text'];
 
-    // Визначення літер, які зустрічаються у тексті чотири рази
     function findLetters($text) {
-        $lettersCount = []; // Асоціативний масив для зберігання кількості кожної літери
-        $letters = preg_replace('/[^A-Za-z]/', '', $text); // Видалення не-латинських літер
-        $letters = strtoupper($letters); // Перетворення на великі літери
+        $lettersCount = [];
+        $letters = preg_replace('/[^A-Za-z]/', '', $text);
+        $letters = strtoupper($letters);
 
-        // Підрахунок кількості кожної літери
         for ($i = 0; $i < strlen($letters); $i++) {
             $letter = $letters[$i];
             if (isset($lettersCount[$letter])) {
@@ -35,7 +31,6 @@ if (isset($_POST['text'])) {
             }
         }
 
-        // Фільтрація літер, які зустрічаються чотири рази
         $result = [];
         foreach ($lettersCount as $letter => $count) {
             if ($count == 4) {
@@ -46,8 +41,9 @@ if (isset($_POST['text'])) {
         return $result;
     }
 
-    // Виведення результату
     $foundLetters = findLetters($text);
+    echo "<p>Введений текст:</p>";
+    echo "<p>$text</p>";
     echo "<p>Літери, які зустрічаються у тексті чотири рази: " . implode(', ', $foundLetters) . "</p>";
 }
 ?>

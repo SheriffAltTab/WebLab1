@@ -19,17 +19,23 @@ if (isset($_POST['numbers'])) {
     $numbers = explode(',', $input);
 
     function hasOppositePair($array) {
+        $oppositePairs = [];
         foreach ($array as $number) {
             if (in_array(-$number, $array)) {
-                return true;
+                $oppositePairs[] = [$number, -$number];
             }
         }
-        return false;
+        return $oppositePairs;
     }
 
-    if (hasOppositePair($numbers)) {
+    $oppositePairs = hasOppositePair($numbers);
+
+    if (!empty($oppositePairs)) {
+        echo "<p>Введені числа: " . implode(', ', $numbers) . "</p>";
         echo "<p>У введеному масиві є хоча б одна пара протилежних чисел.</p>";
+
     } else {
+        echo "<p>Введені числа: " . implode(', ', $numbers) . "</p>";
         echo "<p>У введеному масиві немає жодної пари протилежних чисел.</p>";
     }
 }
